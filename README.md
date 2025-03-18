@@ -39,25 +39,6 @@ ansible-playbook -i hosts tcpdump_capture.yml
 # Follow the prompts to start and stop the capture. The capture file will be saved to /tmp/tcpdump_output.pcap on your local machine.
 
 
----
-
-### How to Use
-
-1. Copy the entire content above.
-2. Go to your GitHub repository.
-3. Click on the **Add file** button and select **Create new file**.
-4. Name the file `README.md`.
-5. Paste the content into the file editor.
-6. Commit the changes.
-
----
-
-### Final Notes
-
-- The `README.md` is now complete, visually appealing, and ready for GitHub.
-- It includes all the necessary instructions, tips, and a friendly tone to guide users.
-
-Let me know if you need further assistance! 🎉
 📜 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
@@ -91,5 +72,26 @@ Final Notes
 The README.md is now complete, visually appealing, and ready for GitHub.
 
 It includes all the necessary instructions, tips, and a friendly tone to guide users.
+
+Let me know if you need further assistance! 🎉
+
+
+---
+
+### How to Use
+
+1. Copy the entire content above.
+2. Go to your GitHub repository.
+3. Click on the **Add file** button and select **Create new file**.
+4. Name the file `README.md`.
+5. Paste the content into the file editor.
+6. Commit the changes.
+
+---
+
+### Final Notes
+
+- The `README.md` is now complete, visually appealing, and ready for GitHub.
+- It includes all the necessary instructions, tips, and a friendly tone to guide users.
 
 Let me know if you need further assistance! 🎉
