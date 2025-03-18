@@ -1,0 +1,63 @@
+---
+- name: Manage tcpdump capture process on destination client
+  hosts: "{{ destination_ip }}"
+  gather_facts: no
+  vars_prompt:
+    - name: "capture_interface"
+      prompt: "Enter the network interface to capture on (e.g., eth0)"
+      private: no
+
+    - name: "username"
+      prompt: "Enter the SSH username for destination client"
+      private: no
+
+    - name: "password"
+      prompt: "Enter the SSH password for destination client"
+      private: yes
+
+  tasks:
+    - name: Start tcpdump on destination client
+      shell: |
+        echo "Starting tcpdump on client2 at {{ capture_interface }} interface"
+        tcpdump -i {{ capture_interface }} -s 0 -w /tmp/tcpdump_output.pcap &
+        echo $! > /tmp/tcpdump.pid
+      become: yes
+      become_user: root
+      vars:
+        ansible_ssh_user: "{{ username }}"
+        ansible_ssh_pass: "{{ password }}"
+
+    - name: Wait for user to stop tcpdump (Press 'S' when you're ready to stop it)
+      pause:
+        prompt: "Press 'S' to stop tcpdump once you're ready."
+
+    - name: Stop and kill tcpdump on destination client by PID
+      shell: |
+        PID=$(cat /tmp/tcpdump.pid)
+        echo "Stopping and killing tcpdump with PID: $PID"
+        kill -9 $PID
+      become: yes
+      become_user: root
+      vars:
+        ansible_ssh_user: "{{ username }}"
+        ansible_ssh_pass: "{{ password }}"
+
+    - name: Verify capture file exists on destination client
+      stat:
+        path: /tmp/tcpdump_output.pcap
+      register: capture_file_status
+      vars:
+        ansible_ssh_user: "{{ username }}"
+        ansible_ssh_pass: "{{ password }}"
+
+    - name: Debug output for capture file status on destination client
+      debug:
+        msg: "Capture file exists on destination client: {{ capture_file_status.stat.exists }}"
+
+    - name: Fetch capture file from destination client to local machine
+      fetch:
+        src: /tmp/tcpdump_output.pcap
+        dest: /tmp/tcpdump_output.pcap
+      vars:
+        ansible_ssh_user: "{{ username }}"
+        ansible_ssh_pass: "{{ password }}"
